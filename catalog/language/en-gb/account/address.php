@@ -24,12 +24,14 @@ $_['entry_country']      = 'Country';
 $_['entry_zone']         = 'Region / State';
 $_['entry_default']      = 'Default Address';
 
-// SNS Entry
+// SNS Run
 $_['entry_sns_province']	= 'Province';
 $_['entry_sns_regency']		= 'Kab/Kota';
+$_['entry_sns_district']	= 'Kecamatan';
 
 $_['error_sns_province']	= 'Please select a province!';
 $_['error_sns_regency']		= 'Please select a kab/kota!';
+$_['error_sns_district']	= 'Please select a kecamatan!';
 
 
 // Error

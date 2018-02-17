@@ -140,5 +140,26 @@ class ControllerAccountAccount extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function regency() {
+		$json = array();
+
+		$this->load->model('localisation/sns_address');
+
+		$regency_info = $this->model_localisation_sns_address->getRegency($this->request->get['regency_id']);
+
+		if ($regency_info) {
+			// $this->load->model('localisation/zone');
+
+			$json = array(
+				'regency_id'       	=> $regency_info['regency_id'],
+				'name'              => $regency_info['name'],
+				'district'          => $this->model_localisation_sns_address->getDistrictsByRegencyId($this->request->get['regency_id'])
+			);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 // SANDBOX PART ENDS HERE
 }
