@@ -118,4 +118,27 @@ class ControllerAccountAccount extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+// SANDBOX PART HERE
+	public function province() {
+		$json = array();
+
+		$this->load->model('localisation/sns_address');
+
+		$province_info = $this->model_localisation_sns_address->getProvince($this->request->get['province_id']);
+
+		if ($province_info) {
+			// $this->load->model('localisation/zone');
+
+			$json = array(
+				'province_id'       => $province_info['province_id'],
+				'name'              => $province_info['name'],
+				'regency'           => $this->model_localisation_sns_address->getRegenciesByProvinceId($this->request->get['province_id'])
+			);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+// SANDBOX PART ENDS HERE
 }

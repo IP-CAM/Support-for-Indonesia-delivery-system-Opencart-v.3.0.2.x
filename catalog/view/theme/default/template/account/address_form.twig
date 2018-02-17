@@ -102,8 +102,9 @@
               {% endif %} </div>
           </div>
 
-<!-- SANDBOX PART HERE -->
+<!-- SANDBOX PART 1 HERE -->
 
+        <!-- PROVINCE DROP DOWN LIST -->
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-country">{{ entry_sns_province }}</label>
             <div class="col-sm-10">
@@ -111,20 +112,31 @@
                 <option value="">{{ text_select }}</option>
                 
                 {% for province in provinces %}
-                  {% if province.id == province_id %}
+                  {% if province.province_id == province_id %}
                 
-                <option value="{{ country.country_id }}" selected="selected">{{ province.name }}</option>
+                <option value="{{ province.province_id }}" selected="selected">{{ province.name }}</option>
                 
                   {% else %}
                 
-                <option value="{{ country.country_id }}">{{ province.name }}</option>
+                <option value="{{ province.province_id }}">{{ province.name }}</option>
                 
                   {% endif %}
                 {% endfor %}
               
               </select>
-              {% if error_country %}
-              <div class="text-danger">{{ error_country }}</div>
+              {% if error_sns_province %}
+              <div class="text-danger">{{ error_sns_province }}</div>
+              {% endif %} </div>
+          </div>
+
+        <!-- REGENCY DROP DOWN LIST -->
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-regency">{{ entry_sns_regency }}</label>
+            <div class="col-sm-10">
+              <select name="regency_id" id="input-regency" class="form-control">
+              </select>
+              {% if error_sns_regency %}
+              <div class="text-danger">{{ error_sns_regency }}</div>
               {% endif %} </div>
           </div>
 
@@ -443,4 +455,51 @@ $('select[name=\'country_id\']').on('change', function() {
 
 $('select[name=\'country_id\']').trigger('change');
 //--></script> 
+
+<!-- SANDBOX PART 2 HERE -->
+<script type="text/javascript"><!--
+$('select[name=\'province_id\']').on('change', function() {
+  $.ajax({
+    url: 'index.php?route=account/account/province&province_id=' + this.value,
+    dataType: 'json',
+    beforeSend: function() {
+      $('select[name=\'province_id\']').prop('disabled', true);
+    },
+    complete: function() {
+      $('select[name=\'province_id\']').prop('disabled', false);
+    },
+    success: function(json) {
+      // if (json['postcode_required'] == '1') {
+      //   $('input[name=\'postcode\']').parent().parent().addClass('required');
+      // } else {
+      //   $('input[name=\'postcode\']').parent().parent().removeClass('required');
+      // }
+      
+      html = '<option value="">{{ text_select }}</option>';
+      
+      if (json['regency'] && json['regency'] != '') {
+        for (i = 0; i < json['regency'].length; i++) {
+          html += '<option value="' + json['regency'][i]['regency_id'] + '"';
+          
+          if (json['regency'][i]['regency_id'] == '{{ regency_id }}') {
+            html += ' selected="selected"';
+          }
+          
+          html += '>' + json['regency'][i]['name'] + '</option>';
+        }
+      } else {
+        html += '<option value="0" selected="selected">{{ text_none }}</option>';
+      }
+      
+      $('select[name=\'regency_id\']').html(html);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
+});
+
+$('select[name=\'province_id\']').trigger('change');
+//--></script> 
+<!-- SANDBOX PART ENDS HERE -->
 {{ footer }}
