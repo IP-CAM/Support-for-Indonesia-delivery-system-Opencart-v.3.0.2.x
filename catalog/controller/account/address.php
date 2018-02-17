@@ -130,6 +130,8 @@ class ControllerAccountAddress extends Controller {
 		$this->getList();
 	}
 
+// THIS FUNCTION IS EDITED
+	// Allocate array for province, regency, and district
 	protected function getList() {
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -168,7 +170,7 @@ class ControllerAccountAddress extends Controller {
 			if ($result['address_format']) {
 				$format = $result['address_format'];
 			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}' . "\n" . '{province}' . "\n" . '{regency}' . "\n" . '{district}';
 			}
 
 			$find = array(
@@ -181,7 +183,10 @@ class ControllerAccountAddress extends Controller {
 				'{postcode}',
 				'{zone}',
 				'{zone_code}',
-				'{country}'
+				'{country}',
+				'{province}',
+				'{regency}',
+				'{district}'
 			);
 
 			$replace = array(
@@ -194,7 +199,10 @@ class ControllerAccountAddress extends Controller {
 				'postcode'  => $result['postcode'],
 				'zone'      => $result['zone'],
 				'zone_code' => $result['zone_code'],
-				'country'   => $result['country']
+				'country'   => $result['country'],
+				'province'  => $result['province'],
+				'regency'   => $result['regency'],
+				'district'  => $result['district']
 			);
 
 			$data['addresses'][] = array(
