@@ -24,6 +24,12 @@ $_['entry_country']      = 'Country';
 $_['entry_zone']         = 'Region / State';
 $_['entry_default']      = 'Default Address';
 
+// SNS Entry
+$_['entry_sns_province']	= 'Province';
+
+$_['error_sns_province']	= 'Please select a province!';
+
+
 // Error
 $_['error_delete']       = 'Warning: You must have at least one address!';
 $_['error_default']      = 'Warning: You can not delete your default address!';

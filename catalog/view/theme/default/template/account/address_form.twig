@@ -101,6 +101,35 @@
               <div class="text-danger">{{ error_zone }}</div>
               {% endif %} </div>
           </div>
+
+<!-- SANDBOX PART HERE -->
+
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-country">{{ entry_sns_province }}</label>
+            <div class="col-sm-10">
+              <select name="province_id" id="input-province" class="form-control">
+                <option value="">{{ text_select }}</option>
+                
+                {% for province in provinces %}
+                  {% if province.id == province_id %}
+                
+                <option value="{{ country.country_id }}" selected="selected">{{ province.name }}</option>
+                
+                  {% else %}
+                
+                <option value="{{ country.country_id }}">{{ province.name }}</option>
+                
+                  {% endif %}
+                {% endfor %}
+              
+              </select>
+              {% if error_country %}
+              <div class="text-danger">{{ error_country }}</div>
+              {% endif %} </div>
+          </div>
+
+<!-- SANDBOX PART ENDS HERE -->
+
           {% for custom_field in custom_fields %}
           {% if custom_field.type == 'select' %}
           <div class="form-group{% if custom_field.required %} required {% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">

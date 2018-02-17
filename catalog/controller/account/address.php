@@ -384,6 +384,27 @@ class ControllerAccountAddress extends Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+// SANDBOX PART HERE
+
+		if (isset($this->error['province'])) {
+			$data['error_province'] = $this->error['province'];
+		} else {
+			$data['error_province'] = '';
+		}
+
+		if (isset($this->request->post['province_id'])) {
+			$data['province_id'] = (int)$this->request->post['province_id'];
+		}  elseif (!empty($address_info)) {
+			$data['province_id'] = $address_info['province_id'];
+		} else {
+			$data['province_id'] = $this->config->get('config_province_id');
+		}
+
+		$this->load->model('localisation/sns_address');
+		$data['provinces'] = $this->model_localisation_sns_address->getProvinces();
+
+// SANDBOX PART ENDS HERE
+
 		// Custom fields
 		$data['custom_fields'] = array();
 		
