@@ -395,9 +395,21 @@ class ControllerAccountAddress extends Controller {
 // SANDBOX PART HERE
 
 		if (isset($this->error['province'])) {
-			$data['error_province'] = $this->error['province'];
+			$data['error_sns_province'] = $this->error['province'];
 		} else {
-			$data['error_province'] = '';
+			$data['error_sns_province'] = '';
+		}
+
+		if (isset($this->error['regency'])) {
+			$data['error_sns_regency'] = $this->error['regency'];
+		} else {
+			$data['error_sns_regency'] = '';
+		}
+
+		if (isset($this->error['district'])) {
+			$data['error_sns_district'] = $this->error['district'];
+		} else {
+			$data['error_sns_district'] = '';
 		}
 
 		if (isset($this->request->post['province_id'])) {
@@ -408,7 +420,24 @@ class ControllerAccountAddress extends Controller {
 			$data['province_id'] = $this->config->get('config_province_id');
 		}
 
+		if (isset($this->request->post['regency_id'])) {
+			$data['regency_id'] = (int)$this->request->post['regency_id'];
+		}  elseif (!empty($address_info)) {
+			$data['regency_id'] = $address_info['regency_id'];
+		} else {
+			$data['regency_id'] = $this->config->get('config_regency_id');
+		}
+
+		if (isset($this->request->post['district_id'])) {
+			$data['district_id'] = (int)$this->request->post['district_id'];
+		}  elseif (!empty($address_info)) {
+			$data['district_id'] = $address_info['district_id'];
+		} else {
+			$data['district_id'] = $this->config->get('config_district_id');
+		}
+
 		$this->load->model('localisation/sns_address');
+
 		$data['provinces'] = $this->model_localisation_sns_address->getProvinces();
 
 // SANDBOX PART ENDS HERE
@@ -467,25 +496,39 @@ class ControllerAccountAddress extends Controller {
 			$this->error['address_1'] = $this->language->get('error_address_1');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
-			$this->error['city'] = $this->language->get('error_city');
-		}
-
 		$this->load->model('localisation/country');
 
 		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-			$this->error['postcode'] = $this->language->get('error_postcode');
-		}
 
 		if ($this->request->post['country_id'] == '' || !is_numeric($this->request->post['country_id'])) {
 			$this->error['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
-			$this->error['zone'] = $this->language->get('error_zone');
+		if ($this->request->post['country_id'] == 100) {
+			if (!isset($this->request->post['province_id']) || $this->request->post['province_id'] == '' || !is_numeric($this->request->post['province_id'])) {
+				$this->error['province'] = $this->language->get('error_province');
+			}
+
+			if (!isset($this->request->post['regency_id']) || $this->request->post['regency_id'] == '' || !is_numeric($this->request->post['regency_id'])) {
+				$this->error['regency'] = $this->language->get('error_regency');
+			}
+			
+			if (!isset($this->request->post['district_id']) || $this->request->post['district_id'] == '' || !is_numeric($this->request->post['district_id'])) {
+				$this->error['district'] = $this->language->get('error_district');
+			}
+		} else {
+			if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
+				$this->error['city'] = $this->language->get('error_city');
+			}
+
+			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
+				$this->error['zone'] = $this->language->get('error_zone');
+			}
 		}
+		
+		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
+			$this->error['postcode'] = $this->language->get('error_postcode');
+		}		
 
 		// Custom field validation
 		$this->load->model('account/custom_field');

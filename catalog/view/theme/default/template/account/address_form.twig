@@ -53,7 +53,8 @@
               <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2" class="form-control" />
             </div>
           </div>
-          <div class="form-group required">
+          <!-- THIS DIV 1 IS EDITED -->
+          <div class="form-group required sns-non-area">
             <label class="col-sm-2 control-label" for="input-city">{{ entry_city }}</label>
             <div class="col-sm-10">
               <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-city" class="form-control" />
@@ -92,7 +93,8 @@
               <div class="text-danger">{{ error_country }}</div>
               {% endif %} </div>
           </div>
-          <div class="form-group required">
+          <!-- THIS DIV 2 IS EDITED -->
+          <div class="form-group required sns-non-area">
             <label class="col-sm-2 control-label" for="input-zone">{{ entry_zone }}</label>
             <div class="col-sm-10">
               <select name="zone_id" id="input-zone" class="form-control">
@@ -103,7 +105,7 @@
           </div>
 
 <!-- SANDBOX PART 1 HERE -->
-
+      <div class="sns-area" style="display: none">
         <!-- PROVINCE DROP DOWN LIST -->
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-country">{{ entry_sns_province }}</label>
@@ -150,6 +152,7 @@
               <div class="text-danger">{{ error_sns_district }}</div>
               {% endif %} </div>
           </div>
+        </div>
 
 <!-- SANDBOX PART ENDS HERE -->
 
@@ -546,6 +549,51 @@ $('select[name=\'regency_id\']').on('change', function() {
 $('select[name=\'regency_id\']').trigger('change');
 //--></script>
 
- 
+<script type="text/javascript"><!--
+$('select[name=\'country_id\']').on('change', function() {
+  if (this.value == '100') {
+    $('div.sns-non-area').hide();
+    $('div.sns-area').show();
+  } else {
+    $('div.sns-non-area').show();
+    $('div.sns-area').hide();
+  }
+
+  // $.ajax({
+  //   url: 'index.php?route=account/account/province&province_id=' + this.value,
+  //   dataType: 'json',
+  //   beforeSend: function() {
+  //     $('select[name=\'province_id\']').prop('disabled', true);
+  //   },
+  //   complete: function() {
+  //     $('select[name=\'province_id\']').prop('disabled', false);
+  //   },
+  //   success: function(json) {      
+  //     html = '<option value="">{{ text_select }}</option>';
+      
+  //     if (json['regency'] && json['regency'] != '') {
+  //       for (i = 0; i < json['regency'].length; i++) {
+  //         html += '<option value="' + json['regency'][i]['regency_id'] + '"';
+          
+  //         if (json['regency'][i]['regency_id'] == '{{ regency_id }}') {
+  //           html += ' selected="selected"';
+  //         }
+          
+  //         html += '>' + json['regency'][i]['name'] + '</option>';
+  //       }
+  //     } else {
+  //       html += '<option value="0" selected="selected">{{ text_none }}</option>';
+  //     }
+      
+  //     $('select[name=\'regency_id\']').html(html);
+  //   },
+  //   error: function(xhr, ajaxOptions, thrownError) {
+  //     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+  //   }
+  // });
+});
+
+$('select[name=\'country_id\']').trigger('change');
+//--></script>
 <!-- SANDBOX PART ENDS HERE -->
 {{ footer }}
