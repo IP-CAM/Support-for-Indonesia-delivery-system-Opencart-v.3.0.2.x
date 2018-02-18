@@ -1,4 +1,6 @@
 <?php
+
+// LOCALISATION MODEL CREATED TO SUPPORT DATA FETCHING FROM SNS TABLES
 class ModelLocalisationSnsAddress extends Model {
 	public function getProvince($province_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "sns_provinces WHERE province_id = '" . (int)$province_id . "'");

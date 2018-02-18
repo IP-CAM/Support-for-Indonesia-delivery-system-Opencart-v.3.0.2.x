@@ -504,6 +504,7 @@ class ControllerAccountAddress extends Controller {
 			$this->error['country'] = $this->language->get('error_country');
 		}
 
+// THIS PART IS EDITED
 		if ($this->request->post['country_id'] == 100) {
 			if (!isset($this->request->post['province_id']) || $this->request->post['province_id'] == '' || !is_numeric($this->request->post['province_id'])) {
 				$this->error['province'] = $this->language->get('error_province');

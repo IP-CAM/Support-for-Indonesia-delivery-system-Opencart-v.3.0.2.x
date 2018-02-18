@@ -149,7 +149,6 @@ class ControllerAccountAccount extends Controller {
 		$regency_info = $this->model_localisation_sns_address->getRegency($this->request->get['regency_id']);
 
 		if ($regency_info) {
-			// $this->load->model('localisation/zone');
 
 			$json = array(
 				'regency_id'       	=> $regency_info['regency_id'],

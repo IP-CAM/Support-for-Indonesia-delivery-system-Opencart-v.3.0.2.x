@@ -88,6 +88,7 @@ class ModelAccountAddress extends Model {
 				$district_id = '';
 			}
 
+// THIS PART IS EDITED
 			$address_data = array(
 				'address_id'     => $address_query->row['address_id'],
 				'firstname'      => $address_query->row['firstname'],
@@ -182,6 +183,7 @@ class ModelAccountAddress extends Model {
 				$district_id = '';
 			}
 
+// THIS PART IS EDITED
 			$address_data[$result['address_id']] = array(
 				'address_id'     => $result['address_id'],
 				'firstname'      => $result['firstname'],
